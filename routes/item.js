@@ -19,13 +19,16 @@ router.get("/:name", function (req, res, next) {
 })
 
 //POST add item to list
+//add error handling for if name is not string
+//add error handling for it price is not number
+//add error handlign for empty dictionary
 router.post("/", function (req, res, next) {
   try {
     if (!req.body.name) throw new ExpressError("Name is required", 400);
     if (!req.body.price) throw new ExpressError("Price is required", 400);
-    const newItem = { name: req.body.name, price: req.body.price }
+    let newItem = { name: req.body.name, price: req.body.price }
     items.push(newItem)
-    return res.status(201).json({ name: newItem })
+    return res.status(201).json({ item: newItem })
   } catch (e) {
     return next(e)
   }
